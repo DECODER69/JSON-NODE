@@ -2,17 +2,17 @@ const express = require("express");
 const mysql = require("mysql2");
 const app = express();
 const bodyParser = require("body-parser");
-const port = 3000;
+const port = 5000;
 
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-
     database: "sentinels"
 });
 
 //
 app.use(bodyParser.json());
+
 
 // CREATE(insert)
 app.post("/users", (req, res) => {
@@ -23,7 +23,7 @@ app.post("/users", (req, res) => {
         (err, results) => {
             try {
                 if (results.affectedRows > 0) {
-                    // res.json({ message: "Data has been added!" });
+                    res.json({ message: "Data has been added!" });
                     res.json({ results });
                     console.log(results)
                 } else {
@@ -61,10 +61,10 @@ app.put("/users", (req, res) => {
                 try {
                     if (results.affectedRows > 0) {
                         res.json({ message: "Data has been updated!" });
-                        console.log(results);
+                        console.log(results)
                     } else {
                         res.json({ message: "Something went wrong." });
-                        console.log({ err });
+                        console.log({ err })
                     }
                 } catch (err) {
                     res.json({ message: err });
@@ -100,7 +100,7 @@ app.delete("/users", (req, res) => {
             if (results.affectedRows > 0) {
                 res.json({ message: "Data has been deleted!" });
             } else {
-                res.json({ message: "Something went wrong." });
+                res.json({ message: "Something went wrong. \n Please check the error log" });
             }
         } catch (err) {
             res.json({ message: err });
@@ -109,5 +109,5 @@ app.delete("/users", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
+    console.log(`Connection secured on port ${port}`);
 });
